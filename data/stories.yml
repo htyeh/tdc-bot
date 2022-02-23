@@ -1,0 +1,321 @@
+version: "2.0"
+
+stories:
+
+- story: Adding a record
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: add_record
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - active_loop: null
+  - action: utter_confirm_add_record
+  - intent: affirm
+  - action: action_add_record
+
+- story: Adding a record, cancel adding in the end
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: add_record
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - slot_was_set:
+    - requested_slot: new_country
+  - slot_was_set:
+    - new_country: Canada
+  - slot_was_set:
+    - requested_slot: new_date
+  - slot_was_set:
+    - new_date: '2023-11-12'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_confirm_add_record
+  - intent: deny
+  - action: utter_goodbye
+
+- story: Getting results
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: get_results
+  - action: TDC_form
+  - active_loop: TDC_form
+  - action: action_print_result
+
+- story: User refuses both options
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: deny
+  - action: utter_goodbye
+
+- story: Writing 2 records
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: add_record
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - slot_was_set:
+    - requested_slot: new_country
+  - slot_was_set:
+    - new_country: Japan
+  - slot_was_set:
+    - requested_slot: new_date
+  - slot_was_set:
+    - new_date: '2021-11-19'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_confirm_add_record
+  - intent: affirm
+  - action: action_add_record
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: add_record
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - slot_was_set:
+    - requested_slot: new_country
+  - slot_was_set:
+    - new_country: China
+  - slot_was_set:
+    - requested_slot: new_date
+  - slot_was_set:
+    - new_date: '2021-11-19'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_confirm_add_record
+  - intent: affirm
+  - action: action_add_record
+
+- story: Getting results, all options activated
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: get_results
+  - action: TDC_form
+  - active_loop: TDC_form
+  - slot_was_set:
+    - requested_slot: track_home
+  - slot_was_set:
+    - track_home: true
+  - slot_was_set:
+    - requested_slot: track_residency
+  - slot_was_set:
+    - track_residency: true
+  - slot_was_set:
+    - requested_slot: home_name
+  - slot_was_set:
+    - home_name: China
+  - slot_was_set:
+    - requested_slot: residency_name
+  - slot_was_set:
+    - residency_name: Germany
+  - slot_was_set:
+    - requested_slot: residency_begin
+  - slot_was_set:
+    - residency_begin: '2011-11-11'
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_print_result
+
+- story: Add a record, then show results
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: add_record
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - slot_was_set:
+    - requested_slot: new_country
+  - slot_was_set:
+    - new_country: France
+  - slot_was_set:
+    - requested_slot: new_date
+  - slot_was_set:
+    - new_date: '2021-11-10'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_confirm_add_record
+  - intent: affirm
+  - action: action_add_record
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: get_results
+  - action: TDC_form
+  - active_loop: TDC_form
+  - slot_was_set:
+    - requested_slot: track_home
+  - slot_was_set:
+    - track_home: false
+  - slot_was_set:
+    - requested_slot: track_residency
+  - slot_was_set:
+    - track_residency: false
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_print_result
+
+- story: Show results, then add a record
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: get_results
+  - action: TDC_form
+  - active_loop: TDC_form
+  - slot_was_set:
+    - requested_slot: track_home
+  - slot_was_set:
+    - track_home: true
+  - slot_was_set:
+    - requested_slot: track_residency
+  - slot_was_set:
+    - track_residency: true
+  - slot_was_set:
+    - requested_slot: home_name
+  - slot_was_set:
+    - home_name: United States
+  - slot_was_set:
+    - requested_slot: residency_name
+  - slot_was_set:
+    - residency_name: France
+  - slot_was_set:
+    - requested_slot: residency_begin
+  - slot_was_set:
+    - residency_begin: '2012-07-01'
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_print_result
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: add_record
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - slot_was_set:
+    - requested_slot: new_country
+  - slot_was_set:
+    - new_country: Norway
+  - slot_was_set:
+    - requested_slot: new_date
+  - slot_was_set:
+    - new_date: '2020-01-01'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_confirm_add_record
+  - intent: affirm
+  - action: action_add_record
+
+- story: User aborts while adding a record, refuses to continue
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: add_record
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - slot_was_set:
+    - requested_slot: new_country
+  - intent: out_of_scope
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_ask_continue
+  - intent: deny
+  - action: utter_goodbye
+
+- story: User aborts while adding a record, then continues, confirm adding
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: add_record
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - slot_was_set:
+    - requested_slot: new_country
+  - slot_was_set:
+    - new_country: Switzerland
+  - slot_was_set:
+    - requested_slot: new_date
+  - intent: out_of_scope
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_ask_continue
+  - intent: affirm
+  - action: new_entry_form
+  - active_loop: new_entry_form
+  - slot_was_set:
+    - new_country: Switzerland
+  - slot_was_set:
+    - requested_slot: new_date
+  - slot_was_set:
+    - new_date: '2010-09-12'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_confirm_add_record
+  - intent: affirm
+  - action: action_add_record
+
+- story: User aborts while getting results, agrees to continue
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+  - intent: get_results
+  - action: TDC_form
+  - active_loop: TDC_form
+  - slot_was_set:
+    - requested_slot: track_home
+  - slot_was_set:
+    - track_home: true
+  - slot_was_set:
+    - requested_slot: track_residency
+  - intent: out_of_scope
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_ask_continue
+  - intent: affirm
+  - action: TDC_form
+  - active_loop: TDC_form
+  - slot_was_set:
+    - track_home: true
+  - slot_was_set:
+    - requested_slot: track_residency
+  - slot_was_set:
+    - track_residency: false
+  - slot_was_set:
+    - requested_slot: home_name
+  - slot_was_set:
+    - home_name: Taiwan
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_print_result
+

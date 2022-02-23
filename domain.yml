@@ -1,0 +1,121 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- deny
+- inform
+- add_record
+- affirm
+- out_of_scope
+- get_results
+- goodbye
+- bot_challenge
+entities:
+- DATE
+- GPE
+slots:
+  new_country:
+    type: any
+    influence_conversation: false
+  new_date:
+    type: any
+    influence_conversation: false
+  track_home:
+    type: any
+    influence_conversation: false
+  home_name:
+    type: any
+    influence_conversation: false
+  track_residency:
+    type: any
+    influence_conversation: false
+  residency_name:
+    type: any
+    influence_conversation: false
+  residency_begin:
+    type: any
+    influence_conversation: false
+responses:
+  utter_greet:
+  - text: Hello! I am TDC Bot. I can help manage and display your travel history.
+  utter_start:
+  - text: Would you like to add a new record or show your current results?
+  utter_ask_new_country:
+  - text: Which country did you enter?
+  utter_ask_new_date:
+  - text: On what date did you enter this country?
+  utter_ask_track_home:
+  - text: Would you like to know how long you spent in your home country and abroad?
+  utter_ask_home_name:
+  - text: What is your home country?
+  - text: Please enter the name of your home country.
+  utter_ask_track_residency:
+  - text: Do you live in a country other than your own and wish to track your residence period?
+  utter_ask_residency_name:
+  - text: What is your current country of residence?
+  - text: Please enter the name of your country of residence.
+  utter_ask_residency_begin:
+  - text: What was the start date of your residency? Use the format "yyyy-mm-dd".
+  - text: Since when do you live in your current country of residence? Use the format "yyyy-mm-dd".
+  utter_confirm_add_record:
+  - text: You entered {new_country} on {new_date}, confirm adding this record?
+  utter_goodbye:
+  - text: OK, have a great day!
+  - text: OK, goodbye!
+  utter_iamabot:
+  - text: I am TDC Bot. I can help manage and display your travel history.
+  utter_ask_continue:
+  - text: Would you like to continue with the session?
+actions:
+- TDC_form
+- action_add_record
+- action_print_result
+- utter_ask_continue
+- utter_ask_new_country
+- utter_ask_new_date
+- utter_confirm_add_record
+- utter_goodbye
+- utter_greet
+- utter_start
+forms:
+  new_entry_form:
+    required_slots:
+      new_country:
+      - type: from_entity
+        entity: GPE
+      new_date:
+      - type: from_entity
+        entity: DATE
+  TDC_form:
+    required_slots:
+      track_home:
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
+      - type: from_intent
+        intent: inform
+        value: true
+      home_name:
+      - type: from_entity
+        entity: GPE
+      track_residency:
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
+      - type: from_intent
+        intent: inform
+        value: true
+      residency_name:
+      - type: from_entity
+        entity: GPE
+      residency_begin:
+      - type: from_entity
+        entity: DATE

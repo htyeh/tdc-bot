@@ -1,0 +1,25 @@
+version: "2.0"
+
+rules:
+
+- rule: Ask what user wishes to do everytime user greets
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_start
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+# - rule: Ask user to try again if out-of-scope answer is received
+#   steps:
+#   - intent: out_of_scope
+#   - action: utter_out_of_scope
+  # - action: action_default_fallback
